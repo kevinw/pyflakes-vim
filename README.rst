@@ -1,9 +1,14 @@
 pyflakes-vim
 ============
 
-Using my pyflakes_ fork, checks your Python code on the fly.
+A Vim plugin for checking Python code on the fly.
 
-.. _pyflakes: http://github.com/kevinw/pyflakes
+PyFlakes catches common Python errors like mistyping a variable name or
+accessing a local before it is bound, and also gives warnings for things like
+unused imports.
+
+pyflakes-vim uses the output from PyFlakes to highlight the spots in your code
+where 
 
 Quick Installation
 ------------------
@@ -22,6 +27,15 @@ Quick Installation
 .. _release: pyflakes-vim.zip
 .. _runtime path: http://vimdoc.sourceforge.net/htmldoc/options.html#'runtimepath' 
 
+Installation
+------------
+
+1. I recommend getting my PyFlakes_ fork, which uses the ``_ast`` module new to
+   Python 2.5, and is faster and more current than PyFlakes' old usage of
+   the deprecated ``compiler`` module.
+
+.. _PyFlakes: http://github.com/kevinw/pyflakes
+
 Hacking
 -------
 
@@ -30,6 +44,13 @@ Hacking
   git clone git://github.com/kevinw/pyflakes-vim.git
   cd pyflakes-vim
   git clone git://github.com/kevinw/pyflakes.git
+
+TODO
+----
+ * signs_ support (show warning and error icons to left of the buffer area)
+ * configuration variables
+
+.. _signs: http://www.vim.org/htmldoc/sign.html
 
 Changelog
 ---------
