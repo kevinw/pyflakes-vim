@@ -40,9 +40,9 @@ def check(buffer):
 
     try:
         tree = ast.parse(contents, filename)
-    except (SyntaxError, IndentationError):
-        value = sys.exc_info()[1]
+    except:
         try:
+            value = sys.exc_info()[1]
             lineno, offset, line = value[1][1:]
         except IndexError:
             lineno, offset, line = 1, 0, ''
@@ -54,6 +54,7 @@ def check(buffer):
         w = checker.Checker(tree, filename)
         w.messages.sort(key = attrgetter('lineno'))
         return w.messages
+
 
 def vim_quote(s):
     return s.replace("'", "''")
