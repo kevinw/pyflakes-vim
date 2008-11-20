@@ -4,16 +4,22 @@
 " Place this script and the accompanying pyflakes directory in
 " .vim/after/ftplugin/python.
 "
-" Maintainer: Kevin Watters <kevin.watters@gmail.com>
-" Version: 0.1
+" See README for additional installation and information.
 "
 " Thanks to matlib.vim for ideas/code on interactive linting.
+"
+" Maintainer: Kevin Watters <kevin.watters@gmail.com>
+" Version: 0.1
 
 if exists("b:did_pyflakes_plugin")
     finish " only load once
 else
     let b:did_pyflakes_plugin = 1
-end
+endif
+
+if !exists('g:pyflakes_builtins')
+    let g:pyflakes_builtins = []
+endif
 
 if !exists("b:did_python_init")
     python << EOF
@@ -38,6 +44,12 @@ def check(buffer):
     filename = buffer.name
     contents = '\n'.join(buffer[:])
 
+    builtins = []
+    try:
+        builtins = eval(vim.eval('string(g:pyflakes_builtins)'))
+    except Exception:
+        pass
+
     try:
         tree = ast.parse(contents, filename)
     except:
@@ -51,7 +63,7 @@ def check(buffer):
 
         return [SyntaxError(filename, lineno, offset, str(value))]
     else:
-        w = checker.Checker(tree, filename)
+        w = checker.Checker(tree, filename, builtins = builtins)
         w.messages.sort(key = attrgetter('lineno'))
         return w.messages
 
@@ -62,14 +74,18 @@ EOF
     let b:did_python_init = 1
 endif
 
-au BufWinLeave <buffer> call s:ClearPyflakes()
+au BufLeave <buffer> call s:ClearPyflakes()
+
 au BufEnter <buffer> call s:RunPyflakes()
 au InsertLeave <buffer> call s:RunPyflakes()
+au InsertEnter <buffer> call s:RunPyflakes()
+au BufWritePost <buffer> call s:RunPyflakes()
 
 au CursorHold <buffer> call s:RunPyflakes()
+au CursorHoldI <buffer> call s:RunPyflakes()
+
 au CursorHold <buffer> call s:GetPyflakesMessage()
 au CursorMoved <buffer> call s:GetPyflakesMessage()
-au CursorHoldI <buffer> call s:RunPyflakes()
 
 " WideMsg() prints [long] message up to (&columns-1) length
 " guaranteed without "Press Enter" prompt.
