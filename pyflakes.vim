@@ -87,6 +87,26 @@ au CursorHoldI <buffer> call s:RunPyflakes()
 au CursorHold <buffer> call s:GetPyflakesMessage()
 au CursorMoved <buffer> call s:GetPyflakesMessage()
 
+if !exists("*s:PyflakesUpdate")
+    function s:PyflakesUpdate()
+        silent call s:RunPyflakes()
+        call s:GetPyflakesMessage()
+    endfunction
+endif
+
+" Call this function in your .vimrc to update PyFlakes
+if !exists(":PyflakesUpdate")
+  command PyflakesUpdate :call s:PyflakesUpdate()
+endif
+
+" Hook common text manipulation commands to update PyFlakes
+"   TODO: is there a more general "text op" autocommand we could register
+"   for here?
+noremap <silent> dd dd:PyflakesUpdate<CR>
+noremap <silent> dw dw:PyflakesUpdate<CR>
+noremap <silent> u u:PyflakesUpdate<CR>
+noremap <silent> <C-R> <C-R>:PyflakesUpdate<CR>
+
 " WideMsg() prints [long] message up to (&columns-1) length
 " guaranteed without "Press Enter" prompt.
 if !exists("*s:WideMsg")
@@ -101,7 +121,7 @@ endif
 
 if !exists("*s:RunPyflakes")
     function s:RunPyflakes()
-        highlight PyFlakes term=underline gui=undercurl guisp=Orange
+        highlight link PyFlakes SpellBad
 
         if exists("b:cleared")
             if b:cleared == 0
