@@ -1,6 +1,8 @@
 pyflakes-vim
 ============
 
+``pyflakes.vim vim.org script page``
+
 A Vim plugin for checking Python code on the fly.
 
 PyFlakes catches common Python errors like mistyping a variable name or
@@ -9,6 +11,8 @@ unused imports.
 
 pyflakes-vim uses the output from PyFlakes to highlight the spots in your code
 where 
+
+.. _pyflakes.vim: http://www.vim.org/scripts/script.php?script_id=2441
 
 Quick Installation
 ------------------
