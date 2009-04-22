@@ -1,8 +1,6 @@
 pyflakes-vim
 ============
 
-Please see the `pyflakes.vim vim.org script page`_ for the latest info.
-
 A Vim plugin for checking Python code on the fly.
 
 PyFlakes catches common Python errors like mistyping a variable name or
