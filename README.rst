@@ -1,7 +1,7 @@
 pyflakes-vim
 ============
 
-``pyflakes.vim vim.org script page``
+Please see the `pyflakes.vim vim.org script page`_ for the latest info.
 
 A Vim plugin for checking Python code on the fly.
 
