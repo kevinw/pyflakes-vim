@@ -7,10 +7,12 @@ PyFlakes catches common Python errors like mistyping a variable name or
 accessing a local before it is bound, and also gives warnings for things like
 unused imports.
 
-pyflakes-vim uses the output from PyFlakes to highlight the spots in your code
-where 
+pyflakes-vim uses the output from PyFlakes to highlight errors in your code.
+
+Make sure to check vim.org_ for the latest updates.
 
 .. _pyflakes.vim: http://www.vim.org/scripts/script.php?script_id=2441
+.. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
 
 Quick Installation
 ------------------
@@ -23,19 +25,24 @@ Quick Installation
 2. Download the latest release_.
 
 3. Unzip ``pyflakes.vim`` and the ``pyflakes`` directory into
-   ``~/.vim/after/ftplugin/python`` (or somewhere similar on your
+   ``~/.vim/ftplugin/python`` (or somewhere similar on your
    `runtime path`_ that will be sourced for Python files).
 
-.. _release: pyflakes-vim.zip
+.. _release: http://www.vim.org/scripts/script.php?script_id=2441
 .. _runtime path: http://vimdoc.sourceforge.net/htmldoc/options.html#'runtimepath' 
 
 Installation
 ------------
 
-1. I recommend getting my PyFlakes_ fork, which uses the ``_ast`` module new to
-   Python 2.5, and is faster and more current than PyFlakes' old usage of
-   the deprecated ``compiler`` module.
+If you downloaded this from vim.org_, then just drop the contents of the zip
+file into ``~/.vim/ftplugin/python``.
 
+Otherwise, you'll need PyFlakes on your PYTHONPATH somewhere.  I recommend
+getting my PyFlakes_ fork, which uses the ``_ast`` module new to Python 2.5,
+and is faster and more current than PyFlakes' old usage of the deprecated
+``compiler`` module.
+
+.. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
 .. _PyFlakes: http://github.com/kevinw/pyflakes
 
 Hacking
@@ -51,10 +58,13 @@ TODO
 ----
  * signs_ support (show warning and error icons to left of the buffer area)
  * configuration variables
+ * parse or intercept useful output from the warnings module
 
 .. _signs: http://www.vim.org/htmldoc/sign.html
 
 Changelog
 ---------
 
- - 0.1 - First release
+Please see http://www.vim.org/scripts/script.php?script_id=2441 for a history of
+all changes.
+
