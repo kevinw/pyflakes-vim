@@ -40,6 +40,9 @@ class SyntaxError(messages.Message):
         messages.Message.__init__(self, filename, lineno, col)
         self.message_args = (message,)
 
+class blackhole(object):
+    write = flush = lambda *a, **k: None
+
 def check(buffer):
     filename = buffer.name
     contents = '\n'.join(buffer[:])
@@ -51,7 +54,12 @@ def check(buffer):
         pass
 
     try:
-        tree = ast.parse(contents, filename)
+        # TODO: use warnings filters instead of ignoring stderr
+        old_stderr, sys.stderr = sys.stderr, blackhole()
+        try:
+            tree = ast.parse(contents, filename)
+        finally:
+            sys.stderr = old_stderr
     except:
         try:
             value = sys.exc_info()[1]
