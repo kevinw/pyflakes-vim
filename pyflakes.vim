@@ -2,7 +2,7 @@
 " from Pyflakes, a Python lint tool.
 "
 " Place this script and the accompanying pyflakes directory in
-" .vim/after/ftplugin/python.
+" .vim/ftplugin/python.
 "
 " See README for additional installation and information.
 "
