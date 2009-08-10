@@ -149,7 +149,7 @@ for w in check(vim.current.buffer):
     vim.command("let s:matchDict['message'] = '%s'" % vim_quote(w.message % w.message_args))
     vim.command("let b:matchedlines[" + str(w.lineno) + "] = s:matchDict")
 
-    if w.col is None:
+    if w.col is None or isinstance(w, SyntaxError):
         # without column information, just highlight the whole line
         # (minus the newline)
         vim.command(r"let s:mID = matchadd('PyFlakes', '\%" + str(w.lineno) + r"l\n\@!')")
