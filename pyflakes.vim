@@ -170,6 +170,11 @@ if !exists("*s:GetPyflakesMessage")
     function s:GetPyflakesMessage()
         let s:cursorPos = getpos(".")
 
+        " Bail if RunPyflakes hasn't been called yet.
+        if !exists('b:matchedlines')
+            return
+        endif
+
         " if there's a message for the line the cursor is currently on, echo
         " it to the console
         if has_key(b:matchedlines, s:cursorPos[1])
