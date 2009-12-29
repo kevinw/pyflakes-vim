@@ -48,6 +48,7 @@ def check(buffer):
     vimenc = vim.eval('&encoding')
     vimfenc = vim.eval('&fileencoding')
     contents = '\n'.join(buffer[:]).decode(vimenc).encode(vimfenc)
+    contents += '\n'
 
     builtins = []
     try:
