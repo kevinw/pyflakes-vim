@@ -45,7 +45,11 @@ class blackhole(object):
 
 def check(buffer):
     filename = buffer.name
-    contents = '\n'.join(buffer[:])
+    contents = '\n'.join(buffer[:]) + '\n'
+
+    vimenc = vim.eval('&encoding')
+    if vimenc:
+        contents = contents.decode(vimenc)
 
     builtins = []
     try:
