@@ -70,7 +70,7 @@ def check(buffer):
             lineno, offset, line = value[1][1:]
         except IndexError:
             lineno, offset, line = 1, 0, ''
-        if line.endswith("\n"):
+        if line and line.endswith("\n"):
             line = line[:-1]
 
         return [SyntaxError(filename, lineno, offset, str(value))]
