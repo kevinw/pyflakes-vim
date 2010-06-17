@@ -17,7 +17,8 @@ def include_file(f):
     return not any((f.endswith('.pyc'),
                     f.endswith('.zip'),
                     f.startswith('.git'),
-                    f == __file__))
+                    f == __file__,
+                    f == '.DS_Store'))
 
 def make_dist():
     z = zipfile.ZipFile(BUNDLE_FILENAME, 'w', zipfile.ZIP_DEFLATED)
@@ -25,7 +26,7 @@ def make_dist():
     count = 0
     for root, dirs, files in os.walk(base):
         dirs[:] = filter(include_dir, dirs)
-                
+
         for f in files:
             name = os.path.join(root, f)
             if include_file(f):
