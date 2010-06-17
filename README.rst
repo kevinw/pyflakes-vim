@@ -57,10 +57,12 @@ Hacking
 TODO
 ----
  * signs_ support (show warning and error icons to left of the buffer area)
+ * quickfix_ support (allow jumping forward and back through the error list)
  * configuration variables
  * parse or intercept useful output from the warnings module
 
 .. _signs: http://www.vim.org/htmldoc/sign.html
+.. _quickfix: http://vimdoc.sourceforge.net/htmldoc/quickfix.html
 
 Changelog
 ---------
