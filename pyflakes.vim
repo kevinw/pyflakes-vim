@@ -43,6 +43,7 @@ sys.path.insert(0, scriptdir)
 
 from pyflakes import checker, ast, messages
 from operator import attrgetter
+import re
 
 class SyntaxError(messages.Message):
     message = 'could not compile: %s'
@@ -55,7 +56,20 @@ class blackhole(object):
 
 def check(buffer):
     filename = buffer.name
-    contents = '\n'.join(buffer[:]) + '\n'
+    contents = buffer[:]
+
+    # shebang usually found at the top of the file, followed by source code encoding marker.
+    # assume everything else that follows is encoded in the encoding.
+    encoding_found = False
+    for n, line in enumerate(contents):
+        if not encoding_found:
+            if re.match(r'^# -\*- coding: .+? -*-', line):
+                encoding_found = True
+        else:
+            # skip all preceeding lines 
+            contents = [''] * n + contents[n:]
+            break
+    contents = '\n'.join(contents) + '\n'
 
     vimenc = vim.eval('&encoding')
     if vimenc:
