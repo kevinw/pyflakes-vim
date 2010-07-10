@@ -163,18 +163,35 @@ if !exists("*s:GetQuickFixStackCount")
     function s:GetQuickFixStackCount()
         let l:stack_count = 0
         try
-            silent colder 99
+            silent colder 9
         catch /E380:/
         endtry
 
         try
-            for i in range(99)
+            for i in range(9)
                 silent cnewer
                 let l:stack_count = l:stack_count + 1
             endfor
         catch /E381:/
             return l:stack_count
         endtry
+    endfunction
+endif
+
+if !exists("*s:ActivatePyflakesQuickFixWindow")
+    function s:ActivatePyflakesQuickFixWindow()
+        try
+            silent colder 9 " go to the bottom of quickfix stack
+        catch /E380:/
+        endtry
+
+        if s:pyflakes_qf > 0
+            try
+                exe "silent cnewer " . s:pyflakes_qf
+            catch /E381:/
+                echoerr "Could not activate Pyflakes Quickfix Window."
+            endtry
+        endif
     endfunction
 endif
 
@@ -227,18 +244,7 @@ for w in check(vim.current.buffer):
 EOF
         if exists("s:pyflakes_qf")
             " if pyflakes quickfix window is already created, reuse it
-            try
-                silent colder 99 " go to the bottom of quickfix stack
-            catch /E380:/
-            endtry
-
-            if s:pyflakes_qf > 0
-                try
-                    exe "silent cnewer " . s:pyflakes_qf
-                catch /E381:/
-                    echoerr "Could not activate Pyflakes Quickfix Window."
-                endtry
-            endif
+            call s:ActivatePyflakesQuickFixWindow()
             call setqflist(b:qf_list, 'r')
         else
             " one pyflakes quickfix window for all buffer
