@@ -225,16 +225,16 @@ for w in check(vim.current.buffer):
     vim.command("call add(b:matched, s:matchDict)")
     vim.command("call add(b:qf_list, l:qf_item)")
 EOF
-        if exists("b:pyflakes_qf")
+        if exists("s:pyflakes_qf")
             " if pyflakes quickfix window is already created for this buffer, reuse it
             try
                 silent colder 99 " go to the bottom of quickfix stack
             catch /E380:/
             endtry
 
-            if b:pyflakes_qf > 0
+            if s:pyflakes_qf > 0
                 try
-                    exe "silent cnewer " . b:pyflakes_qf
+                    exe "silent cnewer " . s:pyflakes_qf
                 catch /E381:/
                     echoerr "Could not activate Pyflakes Quickfix Window."
                 endtry
@@ -243,7 +243,7 @@ EOF
         else
             " one pyflakes quickfix window for each buffer
             call setqflist(b:qf_list, '')
-            let b:pyflakes_qf = s:GetQuickFixStackCount()
+            let s:pyflakes_qf = s:GetQuickFixStackCount()
         endif
         let b:cleared = 0
     endfunction
