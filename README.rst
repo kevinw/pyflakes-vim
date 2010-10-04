@@ -56,6 +56,15 @@ Hacking
   cd pyflakes-vim
   git clone git://github.com/kevinw/pyflakes.git
 
+Options
+-------
+
+Set this option to you vimrc file to disable quickfix support::
+    
+    let g:pyflakes_use_quickfix = 0
+
+The value is set to 1 by default.
+
 TODO
 ----
  * signs_ support (show warning and error icons to left of the buffer area)
