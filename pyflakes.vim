@@ -159,7 +159,7 @@ if !exists("*s:WideMsg")
         let x=&ruler | let y=&showcmd
         set noruler noshowcmd
         redraw
-        echo a:msg
+        echo strpart(a:msg, 0, &columns-1)
         let &ruler=x | let &showcmd=y
     endfun
 endif
