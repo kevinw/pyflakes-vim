@@ -67,8 +67,8 @@ def check(buffer):
     # assume everything else that follows is encoded in the encoding.
     encoding_found = False
     for n, line in enumerate(contents):
-        if not encoding_found:
-            if re.match(r'^# -\*- coding: .+? -*-', line):
+        if not encoding_found and n < 2:
+            if re.match(r'#.*coding[:=]\s*([-\w.]+)', line):
                 encoding_found = True
         else:
             # skip all preceeding lines 
