@@ -11,14 +11,17 @@ def get_directory():
     return os.path.abspath(os.path.dirname(__file__))
 
 def include_dir(d):
-    return not d.startswith('.git')
+    return not any((d.startswith('.git'),
+                    d.startswith('_trial_temp'),
+                    d.startswith('.svn')))
 
 def include_file(f):
     return not any((f.endswith('.pyc'),
                     f.endswith('.zip'),
                     f.startswith('.git'),
                     f == __file__,
-                    f == '.DS_Store'))
+                    f == '.DS_Store',
+                    f.endswith('.diff')))
 
 def make_dist():
     z = zipfile.ZipFile(BUNDLE_FILENAME, 'w', zipfile.ZIP_DEFLATED)
