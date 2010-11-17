@@ -90,7 +90,7 @@ def check(buffer):
         # TODO: use warnings filters instead of ignoring stderr
         old_stderr, sys.stderr = sys.stderr, blackhole()
         try:
-            tree = ast.parse(contents, filename)
+            tree = ast.parse(contents, filename or '<unknown>')
         finally:
             sys.stderr = old_stderr
     except:
