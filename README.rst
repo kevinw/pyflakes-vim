@@ -41,7 +41,7 @@ file into ``~/.vim/ftplugin/python``.
 
 Otherwise, if you're running "from source," you'll need PyFlakes on your
 PYTHONPATH somewhere.  I recommend getting my PyFlakes_ fork, which retains
-column number information and has therfore has more specific error locations.
+column number information, giving more specific error locations.
 
 .. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
 .. _PyFlakes: http://github.com/kevinw/pyflakes
