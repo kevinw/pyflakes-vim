@@ -85,9 +85,9 @@ def check(buffer):
     if vimenc:
         contents = contents.decode(vimenc)
 
-    builtins = []
+    builtins = set(['__file__'])
     try:
-        builtins = set(eval(vim.eval('string(g:pyflakes_builtins)')))
+        builtins.update(set(eval(vim.eval('string(g:pyflakes_builtins)'))))
     except Exception:
         pass
 
