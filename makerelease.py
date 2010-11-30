@@ -8,7 +8,8 @@ import zipfile
 BUNDLE_FILENAME = 'pyflakes-vim.zip'
 
 def get_directory():
-    return os.path.abspath(os.path.dirname(__file__))
+    return os.path.join(
+        os.path.abspath(os.path.dirname(__file__)))
 
 def include_dir(d):
     return not any((d.startswith('.git'),

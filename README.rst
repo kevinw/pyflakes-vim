@@ -26,22 +26,24 @@ Quick Installation
 
 2. Download the latest release_.
 
-3. Unzip ``pyflakes.vim`` and the ``pyflakes`` directory into
+3. If you're using pathogen_, unzip the contents of ``pyflakes-vim.zip`` into
+   its own bundle directory, i.e. into ``~/.vim/bundle/pyflakes-vim/``.
+
+   Otherwise unzip ``pyflakes.vim`` and the ``pyflakes`` directory into
    ``~/.vim/ftplugin/python`` (or somewhere similar on your
    `runtime path`_ that will be sourced for Python files).
 
 .. _release: http://www.vim.org/scripts/script.php?script_id=2441
+.. _pathogen: http://www.vim.org/scripts/script.php?script_id=2332
 .. _runtime path: http://vimdoc.sourceforge.net/htmldoc/options.html#'runtimepath' 
 
-Installation
-------------
+Running from source
+-------------------
 
-If you downloaded this from vim.org_, then just drop the contents of the zip
-file into ``~/.vim/ftplugin/python``.
-
-Otherwise, if you're running "from source," you'll need PyFlakes on your
-PYTHONPATH somewhere.  I recommend getting my PyFlakes_ fork, which retains
-column number information, giving more specific error locations.
+If you're running pyflakes-vim "from source," you'll need the PyFlakes library
+on your PYTHONPATH somewhere.  (It is included in the vim.org zipfile.) I recommend
+getting my PyFlakes_ fork, which retains column number information, giving more
+specific error locations.
 
 .. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
 .. _PyFlakes: http://github.com/kevinw/pyflakes
