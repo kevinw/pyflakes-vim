@@ -25,7 +25,7 @@ if !exists("b:did_python_init")
     let b:did_python_init = 0
 
     if !has('python')
-        echoerr "Error: the pyflakes.vim plugin requires Vim to be compiled with +python"
+        " the pyflakes.vim plugin requires Vim to be compiled with +python
         finish
     endif
 
