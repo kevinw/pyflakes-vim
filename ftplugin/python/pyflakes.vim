@@ -44,7 +44,8 @@ if sys.version_info[:2] < (2, 5):
 
 # get the directory this script is in: the pyflakes python module should be installed there.
 scriptdir = os.path.join(os.path.dirname(vim.eval('expand("<sfile>")')), 'pyflakes')
-sys.path.insert(0, scriptdir)
+if scriptdir not in sys.path:
+    sys.path.insert(0, scriptdir)
 
 import ast
 from pyflakes import checker, messages
