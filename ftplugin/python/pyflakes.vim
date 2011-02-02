@@ -157,14 +157,6 @@ if !exists(":PyflakesUpdate")
   command PyflakesUpdate :call s:PyflakesUpdate()
 endif
 
-" Hook common text manipulation commands to update PyFlakes
-"   TODO: is there a more general "text op" autocommand we could register
-"   for here?
-noremap <buffer><silent> dd dd:PyflakesUpdate<CR>
-noremap <buffer><silent> dw dw:PyflakesUpdate<CR>
-noremap <buffer><silent> u u:PyflakesUpdate<CR>
-noremap <buffer><silent> <C-R> <C-R>:PyflakesUpdate<CR>
-
 " WideMsg() prints [long] message up to (&columns-1) length
 " guaranteed without "Press Enter" prompt.
 if !exists("*s:WideMsg")
