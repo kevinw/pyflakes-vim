@@ -60,7 +60,7 @@ Hacking
 Options
 -------
 
-Set this option to you vimrc file to disable quickfix support::
+Set this option in your vimrc file to disable quickfix support::
     
     let g:pyflakes_use_quickfix = 0
 
