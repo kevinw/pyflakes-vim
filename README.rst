@@ -53,9 +53,7 @@ Hacking
 
 ::
 
-  git clone git://github.com/kevinw/pyflakes-vim.git
-  cd pyflakes-vim
-  git clone git://github.com/kevinw/pyflakes.git
+  git clone --recursive git://github.com/kevinw/pyflakes-vim.git
 
 Options
 -------
