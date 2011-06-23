@@ -57,6 +57,14 @@ Hacking
   cd pyflakes-vim
   git clone git://github.com/kevinw/pyflakes.git
 
+or use the PyFlakes_ submodule::
+
+  git clone git://github.com/kevinw/pyflakes-vim.git
+  cd pyflakes-vim
+  git submodule init
+  git submodule update
+ 
+
 Options
 -------
 
