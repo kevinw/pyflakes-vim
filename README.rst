@@ -72,7 +72,7 @@ TODO
  * configuration variables
  * parse or intercept useful output from the warnings module
 
-.. _signs: http://www.vim.org/htmldoc/sign.html
+.. _signs: http://vimdoc.sourceforge.net/htmldoc/sign.html
 
 Changelog
 ---------
