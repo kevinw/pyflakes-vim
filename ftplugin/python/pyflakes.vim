@@ -122,6 +122,7 @@ def check(buffer):
 
         checker._MAGIC_GLOBALS = old_globals
 
+	w.messages = filter(lambda m: not buffer[m.lineno-1].endswith('##'), w.messages)
         w.messages.sort(key = attrgetter('lineno'))
         return w.messages
 
