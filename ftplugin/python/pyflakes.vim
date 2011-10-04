@@ -312,7 +312,9 @@ if !exists('*s:ClearPyflakes')
         endfor
         let b:matched = []
         let b:matchedlines = {}
-        unlet b:uncleared
+        if exists('b:uncleared')
+            unlet b:uncleared
+        endif
     endfunction
 endif
 
