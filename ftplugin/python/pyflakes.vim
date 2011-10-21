@@ -33,6 +33,9 @@ if !exists('g:pyflakes_use_quickfix')
     let g:pyflakes_use_quickfix = 1
 endif
 
+if !exists('g:pyflakes_autostart')
+    let g:pyflakes_autostart = 1
+endif
 
     python << EOF
 import vim
@@ -135,16 +138,50 @@ endif
 
 au BufLeave <buffer> call s:ClearPyflakes()
 
-au BufEnter <buffer> call s:RunPyflakes()
-au InsertLeave <buffer> call s:RunPyflakes()
-au InsertEnter <buffer> call s:RunPyflakes()
-au BufWritePost <buffer> call s:RunPyflakes()
+if !exists("*s:PyflakesToggle")
+    function s:PyflakesToggle()
+        if ! exists("b:pyflakes_off") || b:pyflakes_off == 1
+            silent call s:RunPyflakes()
+            echo 'pyflake on'
 
-au CursorHold <buffer> call s:RunPyflakes()
-au CursorHoldI <buffer> call s:RunPyflakes()
+            au BufEnter <buffer> call s:RunPyflakes()
+            au InsertLeave <buffer> call s:RunPyflakes()
+            au InsertEnter <buffer> call s:RunPyflakes()
+            au BufWritePost <buffer> call s:RunPyflakes()
 
-au CursorHold <buffer> call s:GetPyflakesMessage()
-au CursorMoved <buffer> call s:GetPyflakesMessage()
+            au CursorHold <buffer> call s:RunPyflakes()
+            au CursorHoldI <buffer> call s:RunPyflakes()
+
+            au CursorHold <buffer> call s:GetPyflakesMessage()
+            au CursorMoved <buffer> call s:GetPyflakesMessage()
+
+            noremap <buffer><silent> dd dd:PyflakesUpdate<CR>
+            noremap <buffer><silent> dw dw:PyflakesUpdate<CR>
+            noremap <buffer><silent> u u:PyflakesUpdate<CR>
+
+            let b:pyflakes_off = 0
+        else
+            silent call s:ClearPyflakes()
+            echo 'pyflake off'
+
+            au! BufEnter <buffer>
+            au! InsertLeave <buffer>
+            au! InsertEnter <buffer>
+            au! BufWritePost <buffer>
+
+            au! CursorHold <buffer>
+            au! CursorHoldI <buffer>
+            au! CursorMoved <buffer>
+
+            unmap <buffer><silent> dd
+            unmap <buffer><silent> dw
+            unmap <buffer><silent> u
+
+            let b:pyflakes_off = 1
+        endif
+    endfunction
+endif
+
 
 if !exists("*s:PyflakesUpdate")
     function s:PyflakesUpdate()
@@ -157,14 +194,6 @@ endif
 if !exists(":PyflakesUpdate")
   command PyflakesUpdate :call s:PyflakesUpdate()
 endif
-
-" Hook common text manipulation commands to update PyFlakes
-"   TODO: is there a more general "text op" autocommand we could register
-"   for here?
-noremap <buffer><silent> dd dd:PyflakesUpdate<CR>
-noremap <buffer><silent> dw dw:PyflakesUpdate<CR>
-noremap <buffer><silent> u u:PyflakesUpdate<CR>
-noremap <buffer><silent> <C-R> <C-R>:PyflakesUpdate<CR>
 
 " WideMsg() prints [long] message up to (&columns-1) length
 " guaranteed without "Press Enter" prompt.
@@ -320,4 +349,11 @@ if !exists('*s:ClearPyflakes')
         let b:cleared = 1
     endfunction
 endif
+
+
+if g:pyflakes_autostart == 1
+    call s:PyflakesToggle()
+endif
+
+command! -nargs=0 -bar PyflakesToggle call s:PyflakesToggle()
 
