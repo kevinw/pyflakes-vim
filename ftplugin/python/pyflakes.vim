@@ -115,6 +115,7 @@ def check(buffer):
         old_globals = getattr(checker,' _MAGIC_GLOBALS', [])
         checker._MAGIC_GLOBALS = set(old_globals) | builtins
 
+        filename = '(none)' if filename is None else filename
         w = checker.Checker(tree, filename)
 
         checker._MAGIC_GLOBALS = old_globals
