@@ -42,11 +42,11 @@ Running from source
 
 If you're running pyflakes-vim "from source," you'll need the PyFlakes library
 on your PYTHONPATH somewhere.  (It is included in the vim.org zipfile.) I recommend
-getting my PyFlakes_ fork, which retains column number information, giving more
-specific error locations.
+getting the github.com/pyflakes PyFlakes_ fork, which retains column number
+information, giving more specific error locations.
 
 .. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
-.. _PyFlakes: http://github.com/kevinw/pyflakes
+.. _PyFlakes: http://github.com/pyflakes/pyflakes
 
 Hacking
 -------
