@@ -16,6 +16,18 @@ Make sure to check vim.org_ for the latest updates.
 .. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
 .. _quickfix: http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix
 
+Syntastic
+---------
+
+pyflakes-vim is officially deprecated!
+
+The must-have features of pyflakes-vim have been merged into Syntastic_, which
+has a plugin-based syntax checking backend, so that you can check many
+different languages on the fly. I recommend using Syntastic_ unless you're
+mostly just editing Python.
+
+.. _Synastic: https://github.com/scrooloose/syntastic
+
 Quick Installation
 ------------------
 
