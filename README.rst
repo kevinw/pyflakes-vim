@@ -16,6 +16,18 @@ Make sure to check vim.org_ for the latest updates.
 .. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
 .. _quickfix: http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix
 
+Syntastic
+---------
+
+pyflakes-vim is officially deprecated!
+
+The must-have features of pyflakes-vim have been merged into Syntastic_, which
+has a plugin-based syntax checking backend. This means you can check many
+different languages on the fly. I recommend using Syntastic_ unless you're
+mostly just editing Python.
+
+.. _Syntastic: https://github.com/scrooloose/syntastic
+
 Quick Installation
 ------------------
 
@@ -42,20 +54,18 @@ Running from source
 
 If you're running pyflakes-vim "from source," you'll need the PyFlakes library
 on your PYTHONPATH somewhere.  (It is included in the vim.org zipfile.) I recommend
-getting my PyFlakes_ fork, which retains column number information, giving more
-specific error locations.
+getting the github.com/pyflakes PyFlakes_ fork, which retains column number
+information, giving more specific error locations.
 
 .. _vim.org: http://www.vim.org/scripts/script.php?script_id=2441
-.. _PyFlakes: http://github.com/kevinw/pyflakes
+.. _PyFlakes: http://github.com/pyflakes/pyflakes
 
 Hacking
 -------
 
 ::
 
-  git clone git://github.com/kevinw/pyflakes-vim.git
-  cd pyflakes-vim
-  git clone git://github.com/kevinw/pyflakes.git
+  git clone --recursive git://github.com/kevinw/pyflakes-vim.git
 
 or use the PyFlakes_ submodule::
 
