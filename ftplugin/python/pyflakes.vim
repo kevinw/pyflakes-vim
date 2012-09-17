@@ -52,15 +52,10 @@ from pyflakes import checker, messages
 from operator import attrgetter
 import re
 
-class loc(object):
-    def __init__(self, lineno, col=None):
-        self.lineno = lineno
-        self.col_offset = col
-
 class SyntaxError(messages.Message):
     message = 'could not compile: %s'
-    def __init__(self, filename, lineno, col, message):
-        messages.Message.__init__(self, filename, loc(lineno, col))
+    def __init__(self, filename, lineno, message):
+        super(SyntaxError, self).__init__(filename, lineno)
         self.message_args = (message,)
 
 class blackhole(object):
@@ -108,7 +103,7 @@ def check(buffer):
         if line and line.endswith("\n"):
             line = line[:-1]
 
-        return [SyntaxError(filename, lineno, offset, str(value))]
+        return [SyntaxError(filename, lineno, str(value))]
     else:
         # pyflakes looks to _MAGIC_GLOBALS in checker.py to see which
         # UndefinedNames to ignore
