@@ -145,12 +145,12 @@ if !exists("*s:PyflakesToggle")
             silent call s:RunPyflakes()
             echo 'pyflake on'
 
-            au BufEnter <buffer> call s:RunPyflakes()
+            "au BufEnter <buffer> call s:RunPyflakes()
             au InsertLeave <buffer> call s:RunPyflakes()
             au InsertEnter <buffer> call s:RunPyflakes()
             au BufWritePost <buffer> call s:RunPyflakes()
 
-            au CursorHold <buffer> call s:RunPyflakes()
+            "au CursorHold <buffer> call s:RunPyflakes()
             au CursorHoldI <buffer> call s:RunPyflakes()
 
             au CursorHold <buffer> call s:GetPyflakesMessage()
