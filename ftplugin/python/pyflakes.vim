@@ -62,6 +62,8 @@ class SyntaxError(messages.Message):
     def __init__(self, filename, lineno, col, message):
         messages.Message.__init__(self, filename, loc(lineno, col))
         self.message_args = (message,)
+        # fix 某些情况缺少lineno导致异常
+        self.lineno = lineno
 
 class blackhole(object):
     write = flush = lambda *a, **k: None
