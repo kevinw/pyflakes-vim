@@ -68,7 +68,10 @@ def check(buffer):
     except:
         try:
             value = sys.exc_info()[1]
-            lineno, offset, line = value[1][1:]
+            if sys.version_info[0] < 3:
+                lineno, offset, line = value[1][1:]
+            else:
+                lineno, offset, line = value.lineno, value.offset, ''
         except IndexError:
             lineno, offset, line = 1, 0, ''
         if line and line.endswith("\n"):
