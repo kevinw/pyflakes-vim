@@ -56,7 +56,7 @@ if !exists("b:did_python_init")
         let g:pyflakes_use_quickfix = 1
     endif
 
-    execute s:pyflakes_pyfile . " " . s:pyflakes_dir . "/script1.py"
+    execute s:pyflakes_pyfile . " " . s:pyflakes_dir . "/define_check_function.py"
 
     let b:did_python_init = 1
 endif
@@ -166,7 +166,7 @@ if !exists("*s:RunPyflakes")
         let b:qf_list = []
         let b:qf_window_count = -1
         
-        execute s:pyflakes_pyfile . " " . s:pyflakes_dir . "/script2.py"
+        execute s:pyflakes_pyfile . " " . s:pyflakes_dir . "/do_check.py"
         if g:pyflakes_use_quickfix == 1
             if exists("s:pyflakes_qf")
                 " if pyflakes quickfix window is already created, reuse it
