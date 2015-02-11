@@ -24,8 +24,8 @@ endif
 if !exists("b:did_python_init")
     let b:did_python_init = 0
 
-    if !has('python')
-        " the pyflakes.vim plugin requires Vim to be compiled with +python
+    if !has('python3')
+        " the pyflakes.vim plugin requires Vim to be compiled with +python3
         finish
     endif
 
@@ -34,15 +34,15 @@ if !exists('g:pyflakes_use_quickfix')
 endif
 
 
-    python << EOF
+    python3 << EOF
 import vim
 import os.path
 import sys
 
-if sys.version_info[:2] < (2, 5):
-    raise AssertionError('Vim must be compiled with Python 2.5 or higher; you have ' + sys.version)
+if sys.version_info[:2] < (3, 0):
+    raise AssertionError('Vim must be compiled with python 3.0 or higher; you have ' + sys.version)
 
-# get the directory this script is in: the pyflakes python module should be installed there.
+# get the directory this script is in: the pyflakes python3 module should be installed there.
 scriptdir = os.path.join(os.path.dirname(vim.eval('expand("<sfile>")')), 'pyflakes')
 if scriptdir not in sys.path:
     sys.path.insert(0, scriptdir)
@@ -50,6 +50,7 @@ if scriptdir not in sys.path:
 import ast
 from pyflakes import checker, messages
 from operator import attrgetter
+from warnings import catch_warnings
 import re
 
 class loc(object):
@@ -85,8 +86,6 @@ def check(buffer):
     contents = '\n'.join(contents) + '\n'
 
     vimenc = vim.eval('&encoding')
-    if vimenc:
-        contents = contents.decode(vimenc)
 
     builtins = set(['__file__'])
     try:
@@ -95,16 +94,12 @@ def check(buffer):
         pass
 
     try:
-        # TODO: use warnings filters instead of ignoring stderr
-        old_stderr, sys.stderr = sys.stderr, blackhole()
-        try:
+        with catch_warnings():
             tree = ast.parse(contents, filename or '<unknown>')
-        finally:
-            sys.stderr = old_stderr
     except:
         try:
             value = sys.exc_info()[1]
-            lineno, offset, line = value[1][1:]
+            lineno, offset, line = value.args[1][1:]
         except IndexError:
             lineno, offset, line = 1, 0, ''
         if line and line.endswith("\n"):
@@ -237,7 +232,7 @@ if !exists("*s:RunPyflakes")
         let b:qf_list = []
         let b:qf_window_count = -1
         
-        python << EOF
+        python3 << EOF
 for w in check(vim.current.buffer):
     if not isinstance(w.lineno, int):
         lineno = str(w.lineno.lineno)
