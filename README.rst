@@ -1,3 +1,21 @@
+This is a pyflakes-vim fork aiming at python3 compatibility, it does not mean
+I aim to support it seriously, as I really don’t know anything about VimL, but
+I want to make it at least usable for me.
+
+Syntastic is way too heavy for me, and the original pyflakes-vim has no python 3
+support (and when you use some non-python2 syntax it is basically useless).
+vim-flake8 is good but has no on-the-fly checking and error highlight, so I find
+it less useful.
+
+Anyway, here are my changes, they require a python3-capable vim, and you cannot
+use the plugin with most python2 code as the syntax is somewhat different and vim
+doesn’t make a difference between python 2 and python 3 when activating plugins.
+
+And for some reason, the pyflakes master branch doesn’t work, so I removed the
+submodule; pyflakes needs to be installed separately.
+
+Original README below.
+
 pyflakes-vim is officially deprecated!
 --------------------------------------
 
