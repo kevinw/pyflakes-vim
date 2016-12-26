@@ -34,7 +34,7 @@ if !exists('g:pyflakes_use_quickfix')
 endif
 
 
-    python << EOF
+    python3 << EOF
 import vim
 import os.path
 import sys
@@ -84,9 +84,9 @@ def check(buffer):
 
     contents = '\n'.join(contents) + '\n'
 
-    vimenc = vim.eval('&encoding')
-    if vimenc:
-        contents = contents.decode(vimenc)
+#    vimenc = vim.eval('&encoding')
+#    if vimenc:
+#        contents = contents.decode(vimenc)
 
     builtins = set(['__file__'])
     try:
@@ -104,7 +104,7 @@ def check(buffer):
     except:
         try:
             value = sys.exc_info()[1]
-            lineno, offset, line = value[1][1:]
+            lineno, offset, line = value.args[1][1:]
         except IndexError:
             lineno, offset, line = 1, 0, ''
         if line and line.endswith("\n"):
@@ -122,9 +122,10 @@ def check(buffer):
 
         checker._MAGIC_GLOBALS = old_globals
 
-	w.messages = filter(lambda m: not buffer[m.lineno-1].endswith('##'), w.messages)
-        w.messages.sort(key = attrgetter('lineno'))
-        return w.messages
+        w.messages = filter(lambda m: not buffer[m.lineno-1].endswith('##'), w.messages)
+#        w.messages.sort(key = attrgetter('lineno'))
+#	return w.messages
+        return sorted(w.messages, key = attrgetter('lineno'))
 
 
 def vim_quote(s):
@@ -239,7 +240,7 @@ if !exists("*s:RunPyflakes")
         let b:qf_list = []
         let b:qf_window_count = -1
         
-        python << EOF
+        python3 << EOF
 for w in check(vim.current.buffer):
     if not isinstance(w.lineno, int):
         lineno = str(w.lineno.lineno)
@@ -279,7 +280,7 @@ EOF
                 call setqflist(b:qf_list, 'r')
             else
                 " one pyflakes quickfix window for all buffer
-                call setqflist(b:qf_list, '')
+                call setqflist(b:qf_list, ' ')
                 let s:pyflakes_qf = s:GetQuickFixStackCount()
             endif
         endif
