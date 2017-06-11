@@ -35,13 +35,12 @@ def make_dist():
             name = os.path.join(root, f)
             if include_file(f):
                 zipname = os.path.relpath(name, base)
-                print zipname
+                print(zipname)
                 count += 1
                 z.writestr(zipname, open(name, 'rb').read())
     z.close()
 
-    print
-    print '%s is %d files, %d bytes' % (BUNDLE_FILENAME, count, os.path.getsize(BUNDLE_FILENAME))
+    print('%s is %d files, %d bytes' % (BUNDLE_FILENAME, count, os.path.getsize(BUNDLE_FILENAME)))
 
 if __name__ == '__main__':
     make_dist()
