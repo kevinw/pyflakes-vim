@@ -33,6 +33,7 @@ if !exists('g:pyflakes_use_quickfix')
     let g:pyflakes_use_quickfix = 1
 endif
 
+let g:pyflakes_has_errors = 0
 
     python << EOF
 import vim
@@ -69,6 +70,7 @@ class blackhole(object):
     write = flush = lambda *a, **k: None
 
 def check(buffer):
+    vim.command("let g:pyflakes_has_errors = 0")
     filename = buffer.name
     contents = buffer[:]
 
@@ -267,6 +269,7 @@ for w in check(vim.current.buffer):
         vim.command("let l:qf_item.vcol = 1")
         vim.command("let l:qf_item.col = %s" % str(w.col + 1))
 
+    vim.command("let g:pyflakes_has_errors = 1")
     vim.command("call add(b:matched, s:matchDict)")
     vim.command("call add(b:qf_list, l:qf_item)")
 EOF
