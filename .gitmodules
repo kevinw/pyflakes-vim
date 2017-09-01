@@ -1,3 +1,3 @@
 [submodule "ftplugin/python/pyflakes"]
 	path = ftplugin/python/pyflakes
-	url = https://github.com/pyflakes/pyflakes.git
+	url = https://github.com/PyCQA/pyflakes.git
