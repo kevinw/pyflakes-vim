@@ -24,8 +24,12 @@ endif
 if !exists("b:did_python_init")
     let b:did_python_init = 0
 
-    if !has('python')
-        " the pyflakes.vim plugin requires Vim to be compiled with +python
+    if has('python')
+        command! -nargs=1 Python python <args>
+    elseif has('python3')
+        command! -nargs=1 Python python3 <args>
+    else
+        echo "Error: Requires Vim compiled with +python or +python3"
         finish
     endif
 
@@ -34,100 +38,22 @@ if !exists('g:pyflakes_use_quickfix')
 endif
 
 
-    python << EOF
+Python << EOF
 import vim
-import os.path
+from os.path import dirname, join as pjoin
 import sys
 
 if sys.version_info[:2] < (2, 5):
     raise AssertionError('Vim must be compiled with Python 2.5 or higher; you have ' + sys.version)
 
 # get the directory this script is in: the pyflakes python module should be installed there.
-scriptdir = os.path.join(os.path.dirname(vim.eval('expand("<sfile>")')), 'pyflakes')
-if scriptdir not in sys.path:
-    sys.path.insert(0, scriptdir)
+script_dir = dirname(vim.eval('expand("<sfile>")'))
+flakes_dir = pjoin(script_dir, 'pyflakes')
+for path in (script_dir, flakes_dir):
+    if path not in sys.path:
+        sys.path.insert(0, path)
 
-import ast
-from pyflakes import checker, messages
-from operator import attrgetter
-import re
-
-class loc(object):
-    def __init__(self, lineno, col=None):
-        self.lineno = lineno
-        self.col_offset = col
-
-class SyntaxError(messages.Message):
-    message = 'could not compile: %s'
-    def __init__(self, filename, lineno, col, message):
-        messages.Message.__init__(self, filename, loc(lineno, col))
-        self.message_args = (message,)
-        # fix 某些情况缺少lineno导致异常
-        self.lineno = lineno
-
-class blackhole(object):
-    write = flush = lambda *a, **k: None
-
-def check(buffer):
-    filename = buffer.name
-    contents = buffer[:]
-
-    # shebang usually found at the top of the file, followed by source code encoding marker.
-    # assume everything else that follows is encoded in the encoding.
-    encoding_found = False
-    for n, line in enumerate(contents):
-        if n >= 2:
-            break
-        elif re.match(r'#.*coding[:=]\s*([-\w.]+)', line):
-            contents = ['']*(n+1) + contents[n+1:]
-            break
-
-    contents = '\n'.join(contents) + '\n'
-
-    vimenc = vim.eval('&encoding')
-    if vimenc:
-        contents = contents.decode(vimenc)
-
-    builtins = set(['__file__'])
-    try:
-        builtins.update(set(eval(vim.eval('string(g:pyflakes_builtins)'))))
-    except Exception:
-        pass
-
-    try:
-        # TODO: use warnings filters instead of ignoring stderr
-        old_stderr, sys.stderr = sys.stderr, blackhole()
-        try:
-            tree = ast.parse(contents, filename or '<unknown>')
-        finally:
-            sys.stderr = old_stderr
-    except:
-        try:
-            value = sys.exc_info()[1]
-            lineno, offset, line = value[1][1:]
-        except IndexError:
-            lineno, offset, line = 1, 0, ''
-        if line and line.endswith("\n"):
-            line = line[:-1]
-
-        return [SyntaxError(filename, lineno, offset, str(value))]
-    else:
-        # pyflakes looks to _MAGIC_GLOBALS in checker.py to see which
-        # UndefinedNames to ignore
-        old_globals = getattr(checker,' _MAGIC_GLOBALS', [])
-        checker._MAGIC_GLOBALS = set(old_globals) | builtins
-
-        filename = '(none)' if filename is None else filename
-        w = checker.Checker(tree, filename)
-
-        checker._MAGIC_GLOBALS = old_globals
-
-        w.messages.sort(key = attrgetter('lineno'))
-        return w.messages
-
-
-def vim_quote(s):
-    return s.replace("'", "''")
+from flaker import check, vim_quote
 EOF
     let b:did_python_init = 1
 endif
@@ -230,14 +156,14 @@ if !exists("*s:RunPyflakes")
         else
             let b:cleared = 1
         endif
-        
+
         let b:matched = []
         let b:matchedlines = {}
 
         let b:qf_list = []
         let b:qf_window_count = -1
-        
-        python << EOF
+
+        Python << EOF
 for w in check(vim.current.buffer):
     if not isinstance(w.lineno, int):
         lineno = str(w.lineno.lineno)

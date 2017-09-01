@@ -43,6 +43,14 @@ Quick Installation
    ``~/.vim/ftplugin/python`` (or somewhere similar on your
    `runtime path`_ that will be sourced for Python files).
 
+Test
+----
+
+Some tiny tests with::
+
+    pip install -r test-requirements.txt
+    py.test ftplugin/python/test_flaker.py
+
 .. _release: http://www.vim.org/scripts/script.php?script_id=2441
 .. _pathogen: http://www.vim.org/scripts/script.php?script_id=2332
 .. _runtime path: http://vimdoc.sourceforge.net/htmldoc/options.html#'runtimepath' 
