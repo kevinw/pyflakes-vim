@@ -148,13 +148,8 @@ if !exists("*s:RunPyflakes")
     function s:RunPyflakes()
         highlight link PyFlakes SpellBad
 
-        if exists("b:cleared")
-            if b:cleared == 0
-                silent call s:ClearPyflakes()
-                let b:cleared = 1
-            endif
-        else
-            let b:cleared = 1
+        if exists("b:uncleared")
+            silent call s:ClearPyflakes()
         endif
 
         let b:matched = []
@@ -208,7 +203,7 @@ EOF
             endif
         endif
 
-        let b:cleared = 0
+        let b:uncleared = 1
     endfunction
 end
 
@@ -251,7 +246,9 @@ if !exists('*s:ClearPyflakes')
         endfor
         let b:matched = []
         let b:matchedlines = {}
-        let b:cleared = 1
+        if exists('b:uncleared')
+            unlet b:uncleared
+        endif
     endfunction
 endif
 
