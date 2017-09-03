@@ -53,7 +53,7 @@ for path in (script_dir, flakes_dir):
     if path not in sys.path:
         sys.path.insert(0, path)
 
-from flaker import check, vim_quote
+from flaker import check, vim_quote, SyntaxError
 EOF
     let b:did_python_init = 1
 endif
