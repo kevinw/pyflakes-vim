@@ -1,10 +1,14 @@
-pyflakes-vim is officially deprecated!
+WARNING: DEPRECATED! pyflakes-vim is officially deprecated!
 --------------------------------------
 
-The must-have features of pyflakes-vim have been merged into Syntastic_, which
-has a plugin-based syntax checking backend. This means you can check many
-different languages on the fly. I recommend using Syntastic_ unless you're
-mostly just editing Python.
+The features of pyflakes-vim have been merged into other more widely-used and updated tools.
+
+If you're using vim 8.0 or neovim, try ALE_ and flakes8_ instead.
+
+.. _ALE: https://github.com/w0rp/ale
+.. _flakes8: http://flake8.pycqa.org/en/latest/
+
+On older vims you can try Syntastic_.
 
 .. _Syntastic: https://github.com/scrooloose/syntastic
 
