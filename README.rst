@@ -89,10 +89,23 @@ Options
 -------
 
 Set this option in your vimrc file to disable quickfix support::
-    
+
     let g:pyflakes_use_quickfix = 0
 
 The value is set to 1 by default.
+
+Pyflakes can use Python 2 or Python 3 compiled into Vim.  If you have both,
+you can ask Pyflakes to prefer one or the other, with this in your vimrc::
+
+    let g:pyflakes_prefer_python_version = 3
+
+or::
+
+    let g:pyflakes_prefer_python_version = 2
+
+Pyflakes will chose Python 2 by default, if you have both.  If you prefer a
+version that you don't have, Pyflakes will quietly fall back to the version
+that you do have.
 
 TODO
 ----
