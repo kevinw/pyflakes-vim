@@ -24,19 +24,32 @@ endif
 if !exists("b:did_python_init")
     let b:did_python_init = 0
 
-    if has('python')
-        command! -nargs=1 Python python <args>
-    elseif has('python3')
-        command! -nargs=1 Python python3 <args>
-    else
-        echo "Error: Requires Vim compiled with +python or +python3"
+    if !has('python') && !has('python3')
+        echoerr "Error: Requires Vim compiled with +python or +python3"
         finish
     endif
+    " Default to Python 2
+    if has('python')
+        let py_cmd_ver = 'python'
+    else
+        let py_cmd_ver = 'python3'
+    endif
+    if exists('g:pyflakes_prefer_python_version')
+        if g:pyflakes_prefer_python_version == 3 && has('python3')
+            let py_cmd_ver = 'python3'
+        elseif g:pyflakes_prefer_python_version == 2 && has('python')
+            let py_cmd_ver = 'python'
+        endif
+    endif
+    if py_cmd_ver == 'python'
+        command! -nargs=1 Python python <args>
+    else
+        command! -nargs=1 Python python3 <args>
+    endif
 
-if !exists('g:pyflakes_use_quickfix')
-    let g:pyflakes_use_quickfix = 1
-endif
-
+    if !exists('g:pyflakes_use_quickfix')
+        let g:pyflakes_use_quickfix = 1
+    endif
 
 Python << EOF
 import vim
