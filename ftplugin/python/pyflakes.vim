@@ -26,6 +26,7 @@ if !exists("b:did_python_init")
     " Default to Python 2
     let py_cmd_ver = 'python'
     let py_cmd_ver_other = 'python3'
+    " Let user prefer Python 3
     if exists('g:pyflakes_prefer_python_version') &&
                 \ g:pyflakes_prefer_python_version == 3
         let py_cmd_ver = 'python3'
