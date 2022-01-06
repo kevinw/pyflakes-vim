@@ -75,7 +75,9 @@ def check(buffer):
     except:
         exc_value = sys.exc_info()[1]
         try:
-            lineno, offset, line = exc_value.args[1][1:]
+            lineno = exc_value.lineno
+            offset = exc_value.offset
+            line = exc_value.text
         except IndexError:
             lineno, offset, line = 1, 0, ''
         if line and line.endswith("\n"):
